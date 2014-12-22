@@ -1,3 +1,5 @@
+import Control.Controller;
+
 
 public class Main {
 
@@ -5,9 +7,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("Hello world!");
-
+		Controller c = new Controller();
+		c.run("entree.txt");
 	}
-
 }
