@@ -43,6 +43,10 @@ public class BigBox extends Box {
 		return this.listBoxes;
 	}
 
+	public int[][] getMatrice() {
+		return matrice;
+	}
+
 	@Override
 	public String toString() {
 		String res = "\n";

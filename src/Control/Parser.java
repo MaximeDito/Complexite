@@ -3,11 +3,21 @@ package Control;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+*
+* Class which build data for boxes, with data extracted from the entry file to a string
+*
+* @author Anaïs Marongiu
+*/
 public class Parser {	
 	private int nOfBigBox;
 	private int mOfBigBox;
 	private LinkedList<LinkedList<Integer>> nmOfLittleBox = new LinkedList<LinkedList<Integer>>();
 	
+	/** Build data for boxes, with data extracted from the entry file to a string
+	* @param string of the data extracted from the entry file
+	* @return true if succeed, false if not
+	*/
 	public boolean parse(String dataEntry) {
 		Scanner scanner = new Scanner(dataEntry);
 		

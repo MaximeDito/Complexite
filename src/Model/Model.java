@@ -27,6 +27,7 @@ public class Model {
 		this.bigBoxes.add(new BigBox(this.bigBoxes.getFirst().n, this.bigBoxes.getFirst().m));
 	}
 	
+	
 	public void arrange() throws Exception {
 //		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getFirst(), 0, 0);
 //		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getLast(), 1, 1);
