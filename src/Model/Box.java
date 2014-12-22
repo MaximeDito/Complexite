@@ -1,5 +1,6 @@
 package Model;
 
+
 /**
  * Created by Maxime on 22/12/2014.
  */
@@ -23,6 +24,23 @@ public abstract class Box {
 		this.n = n;
 		this.m = m;
 	}
+	
+	/* ----- ----- Methode ----- ----- */
+	public boolean isLowerThan(Box b) {
+		return (this.getSurface()<b.getSurface());	
+	}
+	
+	public boolean isLowerOrEqualThan(Box b) {
+		return (this.getSurface()<=b.getSurface());	
+	}
+	
+	public boolean isGreaterOrEqualThan(Box b) {
+		return (this.getSurface()>=b.getSurface());	
+	}
+	
+	public boolean isGreaterThan(Box b) {
+		return (this.getSurface()>b.getSurface());	
+	}
 
 	/* ----- ----- Accessors ----- ----- */
 	public int getN() {
@@ -32,11 +50,13 @@ public abstract class Box {
 	public int getM() {
 		return m;
 	}
+	
+	public int getSurface() {
+		return n*m;
+	}
 
 	@Override
 	public String toString() {
 		return n + "x" + m;
 	}
-	
-	
 }
