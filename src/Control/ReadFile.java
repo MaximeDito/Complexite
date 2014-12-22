@@ -25,6 +25,7 @@ public abstract class ReadFile {
 			System.out.println("Chargement du fichier " + url + " : OK");
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.err.println("Chargement du fichier " + url + " : NOK");
 		}
 		
 		return res;
