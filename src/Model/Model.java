@@ -1,13 +1,14 @@
 package Model;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Model {
-	private LinkedList<BigBox> bigBoxes = new LinkedList<BigBox>();
-	private LinkedList<LittleBox> littleBoxes = new LinkedList<LittleBox>();
+	private List<BigBox> bigBoxes = new LinkedList<BigBox>();
+	private List<LittleBox> littleBoxes = new LinkedList<LittleBox>();
 	
 	/* ----- ----- Constructors ----- ----- */
-	public Model(int n, int m, LinkedList<LinkedList<Integer>> ptitesboites) throws Exception {
+	public Model(int n, int m, List<LinkedList<Integer>> ptitesboites) throws Exception {
 		BigBox gb = new BigBox(n, m);
 		this.bigBoxes.add(gb);
 		
@@ -17,14 +18,14 @@ public class Model {
 		}
 	}
 	
-	public Model(LinkedList<LittleBox> ptiteBoites, BigBox firstGrandeBoite) {
+	public Model(List<LittleBox> ptiteBoites, BigBox firstGrandeBoite) {
 		this.bigBoxes.add(firstGrandeBoite);
 		this.littleBoxes = ptiteBoites;
 	}
 	
 	/* ----- ----- Methodes ----- ----- */
 	public void newBigBox() throws Exception {
-		this.bigBoxes.add(new BigBox(this.bigBoxes.getFirst().n, this.bigBoxes.getFirst().m));
+		this.bigBoxes.add(new BigBox(((LinkedList<BigBox>)this.bigBoxes).getFirst().n, ((LinkedList<BigBox>)this.bigBoxes).getFirst().m));
 	}
 	
 	
@@ -37,10 +38,10 @@ public class Model {
 	}
 	
 	/* ----- ----- Accessors ----- ----- */
-	public LinkedList<BigBox> getBigBoxes() {
+	public List<BigBox> getBigBoxes() {
 		return this.bigBoxes;
 	}
-	public LinkedList<LittleBox> getLittleBoxes() {
+	public List<LittleBox> getLittleBoxes() {
 		return this.littleBoxes;
 	}
 
