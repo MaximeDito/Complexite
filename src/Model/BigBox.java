@@ -1,10 +1,12 @@
 package Model;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class BigBox extends Box {
 	// Une grand boite ne peut en contenir une autre
-	private LinkedList<LittleBox> listBoxes = new LinkedList<LittleBox>();
+	private List<LittleBox> listBoxes = new LinkedList<LittleBox>();
 	int[][] matrice;
 
 	/* ----- ----- Constructors ----- ----- */
@@ -38,8 +40,12 @@ public class BigBox extends Box {
 		}
 	}
 
+	public void trierLittleBox() {
+		Collections.sort(this.listBoxes);
+	}
+
 	/* ----- ----- Accessors ----- ----- */
-	public LinkedList<LittleBox> getListBoxes() {
+	public List<LittleBox> getListBoxes() {
 		return this.listBoxes;
 	}
 

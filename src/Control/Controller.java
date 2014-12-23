@@ -13,7 +13,7 @@ import View.Afficheur;
 public class Controller {
 	private Model model;
 	private Parser parser = new Parser();
-	private Afficheur view = new Afficheur(15);
+	private Afficheur view;
 
 	public void run(String urlFile) {
 		String res = ReadFile.load(urlFile);
@@ -39,7 +39,8 @@ public class Controller {
 		LinkedList<int[][]> l = new LinkedList<int[][]>();
 		for(BigBox b : this.model.getBigBoxes())
 			l.add(b.getMatrice());
-		
+
+		view = new Afficheur(model.getLittleBoxes().size());
         view.creerAffichage(l);
 	}	
 }
