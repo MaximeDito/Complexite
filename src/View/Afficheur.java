@@ -71,9 +71,9 @@ public final class Afficheur {
         int blue = random.nextInt(256);
 
         // mix the color
-            red = (red + 255) / 2;
-            green = (green + 255) / 2;
-            blue = (blue + 255) / 2;
+            red = (red + 220) / 2;
+            green = (green + 240) / 2;
+            blue = (blue + 180) / 2;
 
         Color color = new Color(red, green, blue);
         return color;
@@ -124,7 +124,7 @@ public final class Afficheur {
     }
 
     public static void main(String[] args) {
-        Afficheur test = new Afficheur(15);
+        Afficheur test = new Afficheur(29);
         int[][] boite = {
                 {1,2,3,4,0},
                 {1,2,3,4,5},
@@ -137,9 +137,23 @@ public final class Afficheur {
                 {6,7,8,8,9},
                 {10,10,10,10,10},
         };
+        int[][] boite3 = {
+                {13,13,13,13,13},
+                {13,13,13,13,13},
+                {13,13,13,13,13},
+                {0,0,0,0,0},
+        };
+        int[][] boite4 = {
+                {14,15,16,17,18},
+                {19,20,21,22,23},
+                {24,25,26,0,0},
+                {27,27,27,28,28},
+        };
         LinkedList<int[][]> toto = new LinkedList<int[][]>();
         toto.add(boite);
         toto.add(boite2);
+        toto.add(boite3);
+        toto.add(boite4);
         test.creerAffichage(toto);
     }
 }
