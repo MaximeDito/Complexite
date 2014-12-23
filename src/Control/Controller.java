@@ -23,18 +23,20 @@ public class Controller {
 			return;
 		
 		try {
-			this.model = new Model(parser.getNOfBigBox(), parser.getMOfBigBox(), parser.getNMOfLittleBoxes());
+			this.model = new Model(parser.getMOfBigBox(), parser.getNOfBigBox(), parser.getCoordLittleBoxes());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 		
 		try {
-			this.model.arrange();
+			//this.model.arrange();
+			this.model.arrangeRecursif(0, 0, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(this.model);
+		
+		//System.out.println(this.model);
 		
 		LinkedList<int[][]> l = new LinkedList<int[][]>();
 		for(BigBox b : this.model.getBigBoxes())

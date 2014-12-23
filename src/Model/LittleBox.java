@@ -5,7 +5,7 @@ public class LittleBox extends Box {
 		super();
 	}
 
-	public LittleBox(int n, int m) throws Exception {
-		super(n, m);
+	public LittleBox(int r, int c) throws Exception {
+		super(r, c);
 	}
 }

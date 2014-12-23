@@ -47,15 +47,16 @@ public final class Afficheur {
      *
      * Write into the HTML file, the Header.
      */
-    public void initialiseFile() {
+    public void initialiseFile(int nbBoxes) {
         try {
             String head = "<html>"
                     + "\n<head>"
-                    + "\n<title>R&eacute;sultat de la simulation | Marongiu et Dito</title>"
-                    + "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css\">"
-                    + "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css\">"
-                    + "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js\"></script>"
-                    + "\n</head>" + "\n<body class=\"container\"> <style>tr { height:75px;}</style>";
+                    + "\n<title>Résultat de la simulation | Marongiu et Dito</title>"
+                    + "\n<meta charset=\"utf-8\">"
+                    + "\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css\">"
+                    + "\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css\">"
+                    + "\n<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js\"></script>"
+                    + "\n</head>" + "\n<body class=\"container\"> \n<style>tr { height:75px;}</style>\n<h1 class=\"h1\">Résultat de la simulation <small>Total grosses boites : "+nbBoxes+"</small></h1>";
             // On écrit la chaîne
             this.fw.write(head);
         } catch (IOException e) {
@@ -80,16 +81,16 @@ public final class Afficheur {
     }
 
     public void afficheBoite(int[][] boiteInt, int nb) {
-        String boite = "<div class=\"col-md-4\"><table class=\"table table-bordered\"><caption>Boite "+nb+"</caption>";
+        String boite = "\n<div class=\"col-md-4\"><table class=\"table table-bordered\"><caption>Boite "+nb+"</caption>";
         for(int i=0; i<boiteInt.length;i++) {
-            boite += "<tr>";
+            boite += "\n<tr>";
             for (int u = 0; u < boiteInt[0].length; u++) {
                 Color couleur = ((Color)couleurs.get(boiteInt[i][u]));
-                boite +="<td style=\"background-color:rgb("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+");border-color:("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+")\"></td>";
+                boite +="<td style=\"background-color:rgb("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+")\"></td>";
             }
             boite += "</tr>";
         }
-        boite += "</table></div>";
+        boite += "\n</table></div>";
         try {
             fw.write(boite);
         } catch (IOException e) {
@@ -114,7 +115,7 @@ public final class Afficheur {
     }
 
     public void creerAffichage(List<int[][]> boites){
-        this.initialiseFile();
+        this.initialiseFile(boites.size());
         Iterator iterator = boites.iterator();
         while(iterator.hasNext()) {
             int[][] boite = (int[][]) iterator.next();

@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,12 +11,12 @@ public class BigBox extends Box {
 	/* ----- ----- Constructors ----- ----- */
 	public BigBox() {
 		super();
-		this.matrice = new int[this.n][this.m];
+		this.matrice = new int[this.row][this.column];
 	}
 
-	public BigBox(int n, int m) throws Exception {
-		super(n, m);
-		this.matrice = new int[n][m];
+	public BigBox(int r, int c) throws Exception {
+		super(r, c);
+		this.matrice = new int[r][c];
 	}
 	
 	/* ----- ----- Methodes ----- ----- */
@@ -25,36 +24,42 @@ public class BigBox extends Box {
 	 * @param posX : abscisse of the origin of the little box (first case 1x1 at the top left)
 	 * @param posY : ordonne of the origin of the little box (first case 1x1 at the top left)
 	 * */
-	public boolean addLittleBox(LittleBox b, int posX, int posY, int nb) throws Exception {
-		if(!isSurfaceEmpty(b,posX,posY)) return false;
+	public boolean addLittleBox(LittleBox b, int r, int c, int nb) throws Exception {
+		if(!isSurfaceEmpty(b,r,c)) 
+			return false;
+		
 		this.listBoxes.add(b);
 		
-		for(int i=0; i<b.getN(); i++) {
-			for(int j=0; j<b.getM(); j++) {
-				this.matrice[posX+i][posY+j] = nb+1;
+		for(int i=0; i<b.getRow(); i++) {
+			for(int j=0; j<b.getColumn(); j++) {
+				this.matrice[r+i][c+j] = nb+1;
 			}
 		}
 		return true;
 	}
 
-	public boolean isCaseEmpty(int posX, int posY) {
-		if(this.matrice[posX][posY] != 0) return false;
+	public boolean isCaseEmpty(int r, int c) {
+		if(this.matrice[r][c] != 0) return false;
 		return true;
 	}
 
-	public boolean isSurfaceEmpty(LittleBox b,int posX, int posY) throws Exception {
-		if(posX > this.n || posY > this.m)
-			throw new Exception("The little Box is bigger than the big boxes !");
+	public boolean isSurfaceEmpty(LittleBox b,int r, int c) throws Exception {
+		if(r > this.row || c > this.column)
+			throw new Exception("The little box is bigger than the big box !");
 
-		for(int i=0; i<b.getN(); i++) {
-			for(int j=0; j<b.getM(); j++) {
-				if(!isCaseEmpty(posX+i,posY+j)) return false;
+		for(int i=0; i<b.getRow(); i++) {
+			for(int j=0; j<b.getColumn(); j++) {
+				try {
+					if (!isCaseEmpty(r + i, c + j)) 
+						return false;
+				} catch(Exception e) { 
+					return false;
+				}
 				//throw new Exception("There is already a little box at position " + i + ","+ j);
 			}
 		}
 		return true;
 	}
-
 	/* ----- ----- Accessors ----- ----- */
 	public List<LittleBox> getListBoxes() {
 		return this.listBoxes;
@@ -67,8 +72,8 @@ public class BigBox extends Box {
 	@Override
 	public String toString() {
 		String res = "\n";
-		for(int i=0; i<this.matrice[0].length; i++) {
-			for(int j=0; j<this.matrice[1].length; j++)  {
+		for(int i=0; i<this.matrice.length; i++) {
+			for(int j=0; j<this.matrice[0].length; j++)  {
 				res += this.matrice[i][j] + " ";
 			}
 			res += "\n";

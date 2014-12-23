@@ -49,7 +49,7 @@ public class Parser {
 				x = Integer.parseInt(dataLittleBox[0]);
 				y = Integer.parseInt(dataLittleBox[1]);	
 				LinkedList<Integer> l = new LinkedList<Integer>();
-				l.add(x);
+				l.add(x); 
 				l.add(y);
 				nmOfLittleBox.add(l);
 				//System.out.println("PtiteBoite : " + x + "x" + y);
@@ -75,7 +75,7 @@ public class Parser {
 		return mOfBigBox;
 	}
 
-	public List<LinkedList<Integer>> getNMOfLittleBoxes() {
+	public List<LinkedList<Integer>> getCoordLittleBoxes() {
 		return nmOfLittleBox;
 	}
 }
