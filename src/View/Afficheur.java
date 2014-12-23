@@ -37,7 +37,7 @@ public final class Afficheur {
 
     public void initialiserCouleurs(int nbCouleur) {
             couleurs.add(new Color(255,255,255));
-        for(int i=1;i< nbCouleur;i++) {
+        for(int i=1;i <= nbCouleur;i++) {
             couleurs.add(generateRandomColor());
         }
     }

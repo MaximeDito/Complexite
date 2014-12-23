@@ -4,7 +4,7 @@ package Model;
 /**
  * Created by Maxime on 22/12/2014.
  */
-public abstract class Box {
+public abstract class Box implements Comparable {
 	/** largeur */
 	protected int n;
 	
@@ -40,6 +40,15 @@ public abstract class Box {
 	
 	public boolean isGreaterThan(Box b) {
 		return (this.getSurface()>b.getSurface());	
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		int surface1 = this.getSurface();
+		int surface2 = ((LittleBox)o).getSurface();
+		if(surface1 > surface2) return 1;
+		else if(surface1 == surface2) return 0;
+		else return -1;
 	}
 
 	/* ----- ----- Accessors ----- ----- */

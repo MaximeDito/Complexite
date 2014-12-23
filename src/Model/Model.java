@@ -1,10 +1,9 @@
 package Model;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Model {
-	private List<BigBox> bigBoxes = new LinkedList<BigBox>();
+	private List<BigBox> bigBoxes = new ArrayList<BigBox>();
 	private List<LittleBox> littleBoxes = new LinkedList<LittleBox>();
 	
 	/* ----- ----- Constructors ----- ----- */
@@ -12,10 +11,12 @@ public class Model {
 		BigBox gb = new BigBox(n, m);
 		this.bigBoxes.add(gb);
 		
-		for(LinkedList<Integer> coord : ptitesboites) {
+		for(List<Integer> coord : ptitesboites) {
 			LittleBox pb = new LittleBox(coord.get(0), coord.get(1));
 			this.littleBoxes.add(pb);
 		}
+
+		this.trierLittleBoxes();
 	}
 	
 	public Model(List<LittleBox> ptiteBoites, BigBox firstGrandeBoite) {
@@ -30,11 +31,32 @@ public class Model {
 	
 	
 	public void arrange() throws Exception {
+		Iterator iterator = littleBoxes.iterator();
+		int i=0;
+		BigBox currentBB = this.bigBoxes.get(i);
+		LittleBox boite = (LittleBox) iterator.next();
+		while(iterator.hasNext()) {
+			if(!currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite))) {
+				this.bigBoxes.add(new BigBox(currentBB.getN(),currentBB.getM()));
+				currentBB = this.getBigBoxes().get(++i);
+			}
+			else boite = (LittleBox) iterator.next();
+		}
+		//le soucis vient de l'itérator qui ne peux pas appliquer l'algo à la dernière box !
+		if(!currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite))) {
+			this.bigBoxes.add(new BigBox(currentBB.getN(),currentBB.getM()));
+			currentBB = this.getBigBoxes().get(++i);
+			currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite));
+		}
 //		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getFirst(), 0, 0);
 //		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getLast(), 1, 1);
 //		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.get(1), 2, 1);
 		
 		//TODO notre algo de la mort qui tue
+	}
+
+	public void trierLittleBoxes() {
+		Collections.sort(this.littleBoxes);
 	}
 	
 	/* ----- ----- Accessors ----- ----- */

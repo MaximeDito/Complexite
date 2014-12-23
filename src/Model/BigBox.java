@@ -25,23 +25,34 @@ public class BigBox extends Box {
 	 * @param posX : abscisse of the origin of the little box (first case 1x1 at the top left)
 	 * @param posY : ordonne of the origin of the little box (first case 1x1 at the top left)
 	 * */
-	public void addLittleBox(LittleBox b, int posX, int posY) throws Exception {
-		if(posX > this.n || posY > this.m)
-			throw new Exception("Invalide position : out of the matrice");
-		
+	public boolean addLittleBox(LittleBox b, int posX, int posY, int nb) throws Exception {
+		if(!isSurfaceEmpty(b,posX,posY)) return false;
 		this.listBoxes.add(b);
 		
 		for(int i=0; i<b.getN(); i++) {
 			for(int j=0; j<b.getM(); j++) {
-				if(this.matrice[posX+i][posY+j] != 0)
-					throw new Exception("There is already a little box at position " + i + ","+ j);
-				this.matrice[posX+i][posY+j] = this.listBoxes.indexOf(b)+1;
+				this.matrice[posX+i][posY+j] = nb+1;
 			}
 		}
+		return true;
 	}
 
-	public void trierLittleBox() {
-		Collections.sort(this.listBoxes);
+	public boolean isCaseEmpty(int posX, int posY) {
+		if(this.matrice[posX][posY] != 0) return false;
+		return true;
+	}
+
+	public boolean isSurfaceEmpty(LittleBox b,int posX, int posY) throws Exception {
+		if(posX > this.n || posY > this.m)
+			throw new Exception("The little Box is bigger than the big boxes !");
+
+		for(int i=0; i<b.getN(); i++) {
+			for(int j=0; j<b.getM(); j++) {
+				if(!isCaseEmpty(posX+i,posY+j)) return false;
+				//throw new Exception("There is already a little box at position " + i + ","+ j);
+			}
+		}
+		return true;
 	}
 
 	/* ----- ----- Accessors ----- ----- */
