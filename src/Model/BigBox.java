@@ -44,7 +44,7 @@ public class BigBox extends Box {
 
 	public boolean isSurfaceEmpty(LittleBox b,int posX, int posY) throws Exception {
 		if(posX > this.n || posY > this.m)
-			throw new Exception("The little Box is bigger than the big boxes !");
+			throw new Exception("The little box is bigger than the big box !");
 
 		for(int i=0; i<b.getN(); i++) {
 			for(int j=0; j<b.getM(); j++) {
@@ -56,16 +56,6 @@ public class BigBox extends Box {
 		}
 		return true;
 	}
-
-	public boolean boiteFull(LittleBox l) {
-		if(l.getSurface() > this.getSurfaceRemaining()) return true;
-		return false;
-	}
-
-	public int getSurfaceRemaining() {
-		return 0;
-	}
-
 	/* ----- ----- Accessors ----- ----- */
 	public List<LittleBox> getListBoxes() {
 		return this.listBoxes;

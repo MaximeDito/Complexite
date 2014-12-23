@@ -46,9 +46,9 @@ public abstract class Box implements Comparable {
 	public int compareTo(Object o) {
 		int surface1 = this.getSurface();
 		int surface2 = ((LittleBox)o).getSurface();
-		if(surface1 > surface2) return 1;
+		if(surface1 > surface2) return -1;
 		else if(surface1 == surface2) return 0;
-		else return -1;
+		else return 1;
 	}
 
 	/* ----- ----- Accessors ----- ----- */

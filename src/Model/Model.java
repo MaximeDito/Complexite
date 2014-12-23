@@ -31,19 +31,24 @@ public class Model {
 		int i=0;
 		int posX =0;
 		int posY=0;
+		int maxX=0;
 		int maxY=0;
 		BigBox currentBB = this.bigBoxes.get(i);
 		LittleBox boite = (LittleBox) iterator.next();
 		while(iterator.hasNext()) {
 			if(!currentBB.addLittleBox(boite,posX,posY, this.littleBoxes.indexOf(boite))) {
-				this.bigBoxes.add(new BigBox(currentBB.getN(),currentBB.getM()));
-				currentBB = this.getBigBoxes().get(++i);
-				posX = posY = maxY = 0;
+					this.bigBoxes.add(new BigBox(currentBB.getN(), currentBB.getM()));
+					currentBB = this.getBigBoxes().get(++i);
+					posX = posY = maxX = 0;
+				
 			}
 			else {
-				posX +=boite.getN();
-				if(maxY < boite.getM()) maxY = boite.getM();
-				if(posX >= currentBB.getN()) { posY+=maxY; posX =0;}
+				posY +=boite.getM();
+				if(maxX < boite.getN()) maxX = boite.getN();
+				if(posY >= currentBB.getM()) {
+						posX+=maxX; posY =0;
+				}
+				if(posX > currentBB.getN()) posX=0;
 				boite = (LittleBox) iterator.next();
 			}
 		}
@@ -58,7 +63,7 @@ public class Model {
 	public void trierLittleBoxes() {
 		Collections.sort(this.littleBoxes);
 	}
-	
+
 	/* ----- ----- Accessors ----- ----- */
 	public List<BigBox> getBigBoxes() {
 		return this.bigBoxes;
