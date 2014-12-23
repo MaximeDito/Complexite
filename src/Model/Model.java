@@ -25,22 +25,27 @@ public class Model {
 	}
 	
 	/* ----- ----- Methodes ----- ----- */
-	public void newBigBox() throws Exception {
-		this.bigBoxes.add(new BigBox(((LinkedList<BigBox>)this.bigBoxes).getFirst().n, ((LinkedList<BigBox>)this.bigBoxes).getFirst().m));
-	}
-	
-	
+
 	public void arrange() throws Exception {
 		Iterator iterator = littleBoxes.iterator();
 		int i=0;
+		int posX =0;
+		int posY=0;
+		int maxY=0;
 		BigBox currentBB = this.bigBoxes.get(i);
 		LittleBox boite = (LittleBox) iterator.next();
 		while(iterator.hasNext()) {
-			if(!currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite))) {
+			if(!currentBB.addLittleBox(boite,posX,posY, this.littleBoxes.indexOf(boite))) {
 				this.bigBoxes.add(new BigBox(currentBB.getN(),currentBB.getM()));
 				currentBB = this.getBigBoxes().get(++i);
+				posX = posY = maxY = 0;
 			}
-			else boite = (LittleBox) iterator.next();
+			else {
+				posX +=boite.getN();
+				if(maxY < boite.getM()) maxY = boite.getM();
+				if(posX >= currentBB.getN()) { posY+=maxY; posX =0;}
+				boite = (LittleBox) iterator.next();
+			}
 		}
 		//le soucis vient de l'itérator qui ne peux pas appliquer l'algo à la dernière box !
 		if(!currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite))) {
@@ -48,11 +53,6 @@ public class Model {
 			currentBB = this.getBigBoxes().get(++i);
 			currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite));
 		}
-//		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getFirst(), 0, 0);
-//		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.getLast(), 1, 1);
-//		this.bigBoxes.getFirst().addLittleBox(this.littleBoxes.get(1), 2, 1);
-		
-		//TODO notre algo de la mort qui tue
 	}
 
 	public void trierLittleBoxes() {

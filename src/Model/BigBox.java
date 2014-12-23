@@ -48,11 +48,22 @@ public class BigBox extends Box {
 
 		for(int i=0; i<b.getN(); i++) {
 			for(int j=0; j<b.getM(); j++) {
-				if(!isCaseEmpty(posX+i,posY+j)) return false;
+				try {
+					if (!isCaseEmpty(posX + i, posY + j)) return false;
+				} catch(Exception e) { return false;}
 				//throw new Exception("There is already a little box at position " + i + ","+ j);
 			}
 		}
 		return true;
+	}
+
+	public boolean boiteFull(LittleBox l) {
+		if(l.getSurface() > this.getSurfaceRemaining()) return true;
+		return false;
+	}
+
+	public int getSurfaceRemaining() {
+		return 0;
 	}
 
 	/* ----- ----- Accessors ----- ----- */

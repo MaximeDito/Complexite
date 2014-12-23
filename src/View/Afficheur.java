@@ -86,7 +86,7 @@ public final class Afficheur {
             boite += "\n<tr>";
             for (int u = 0; u < boiteInt[0].length; u++) {
                 Color couleur = ((Color)couleurs.get(boiteInt[i][u]));
-                boite +="<td style=\"background-color:rgb("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+");border-color:("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+")\"></td>";
+                boite +="<td style=\"background-color:rgb("+couleur.getRed()+","+couleur.getGreen()+","+couleur.getBlue()+")\"></td>";
             }
             boite += "</tr>";
         }
