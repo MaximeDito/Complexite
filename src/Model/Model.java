@@ -40,7 +40,7 @@ public class Model {
 					this.bigBoxes.add(new BigBox(currentBB.getN(), currentBB.getM()));
 					currentBB = this.getBigBoxes().get(++i);
 					posX = posY = maxX = 0;
-				
+
 			}
 			else {
 				posY +=boite.getM();
