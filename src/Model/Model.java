@@ -30,21 +30,27 @@ public class Model {
 		LittleBox boite = (LittleBox) iterator.next();
 		
 		while(iterator.hasNext()) {
-			if(!currentBB.addLittleBox(boite,col,row, this.littleBoxes.indexOf(boite))) {
+			if(!currentBB.addLittleBox(boite,row,col, this.littleBoxes.indexOf(boite), maxRow, maxCol)) {
 				// creer nouvelle boite
 				this.bigBoxes.add(new BigBox(currentBB.getRow(), currentBB.getColumn()));
 				currentBB = this.getBigBoxes().get(++i);
-				col = row = maxCol = 0;
+				col = row = maxCol = maxRow = 0;
 			}
 			else {
 				// recalcule coordonnee
 				col +=boite.getColumn();
-				
+				if(maxCol < boite.getColumn()) maxCol = boite.getColumn();
+				if(maxRow < boite.getRow()) maxRow = boite.getRow();
 				if(col >= currentBB.getColumn()) {
 					col=0;
-					row += boite.getRow();
+					row += maxRow;
+					if(row >= currentBB.getRow()) row = currentBB.getRow()-1;
 				}
-				
+				if(row >= currentBB.getRow()) {
+					row=0;
+					col += maxCol;
+					if(col >= currentBB.getColumn()) col = currentBB.getColumn()-1;
+				}
 				boite = (LittleBox) iterator.next();
 			}
 		}
@@ -54,50 +60,6 @@ public class Model {
 			currentBB = this.getBigBoxes().get(++i);
 			currentBB.addLittleBox(boite,0,0, this.littleBoxes.indexOf(boite));
 		}*/
-	}
-	
-	
-	// On pourrait croire que ça marche un peu mais nan, pas opti et fait disparaitre certaines ptites boites .. :S
-	public void arrangeRecursif(int numLittleBox, int row, int col) throws Exception {
-		// si plus de petites box, on arrete
-		if(numLittleBox==this.littleBoxes.size()) {
-			return;
-		} 
-		else {
-			BigBox bigboxcurrent = this.bigBoxes.get(this.bigBoxes.size()-1);
-			LittleBox littlebox = this.littleBoxes.get(numLittleBox);
-
-			// On ajoute la petite box dans la grande et on calcule les prochaines coordonnées possible libre
-			boolean res = bigboxcurrent.addLittleBox(littlebox,row,col, this.littleBoxes.indexOf(littlebox));
-			if(res) {
-				// on décale d'une colonne
-				col +=littlebox.getColumn();
-				
-				// si on arrive au bout des colonnes, on décale d'une ligne
-				if(col >= bigboxcurrent.getColumn()) {
-					col = 0;
-					row += littlebox.getRow(); 
-					
-					// si on arrive au bout des lignes, on crée une nouvelle boite (sauf si c'est la derniere)
-					if(row >= bigboxcurrent.getRow()) {
-						if(!((numLittleBox+1)==this.littleBoxes.size())) {
-							col = row = 0;
-							this.bigBoxes.add(new BigBox(bigboxcurrent.getRow(), bigboxcurrent.getColumn()));
-						}
-					}
-				}
-			} 
-			// Si on a pas réussi a ajouter, on crée directement une nouvelle boite et on ajoute
-			else {
-				col = row = 0;
-				this.bigBoxes.add(new BigBox(bigboxcurrent.getRow(), bigboxcurrent.getColumn()));
-				numLittleBox++;
-				bigboxcurrent.addLittleBox(littlebox,row,col, this.littleBoxes.indexOf(littlebox));
-			}
-			// et on recommence
-			numLittleBox++;
-			arrangeRecursif(numLittleBox, row, col);
-		}
 	}
 
 	public void trierLittleBoxes() {
@@ -114,6 +76,6 @@ public class Model {
 
 	@Override
 	public String toString() {
-		return "bigBoxes=" + bigBoxes + "\n" + "littleBoxes=" + littleBoxes;
+		return "bigBoxes=" + bigBoxes + "\n" /*+ "littleBoxes=" + littleBoxes*/;
 	}
 }

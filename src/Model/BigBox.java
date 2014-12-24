@@ -21,13 +21,24 @@ public class BigBox extends Box {
 	
 	/* ----- ----- Methodes ----- ----- */
 	/**
-	 * @param posX : abscisse of the origin of the little box (first case 1x1 at the top left)
-	 * @param posY : ordonne of the origin of the little box (first case 1x1 at the top left)
+	 * @param r : abscisse of the origin of the little box (first case 1x1 at the top left)
+	 * @param c : ordonne of the origin of the little box (first case 1x1 at the top left)
 	 * */
-	public boolean addLittleBox(LittleBox b, int r, int c, int nb) throws Exception {
-		if(!isSurfaceEmpty(b,r,c)) 
-			return false;
-		
+	public boolean addLittleBox(LittleBox b, int r, int c, int nb, int rM, int cM) throws Exception {
+		if(cM+c >= this.getColumn()) cM = this.getColumn()-1;
+		else cM +=c;
+		if(rM+r >= this.getRow()) rM = this.getRow()-1;
+		else rM += r;
+
+		if(!isSurfaceEmpty(b,r,c)) {
+			if(isSurfaceEmpty(b, r - 1, c)) r = r-1;
+			else if(isSurfaceEmpty(b, r, c-1)) c = c-1;
+			else if(isSurfaceEmpty(b,0,cM)) {r =0; c=cM;}
+			else if(isSurfaceEmpty(b,rM,0)) {r=rM; c=0;}
+
+			else return false;
+		}
+
 		this.listBoxes.add(b);
 		
 		for(int i=0; i<b.getRow(); i++) {
