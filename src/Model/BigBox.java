@@ -3,10 +3,18 @@ package Model;
 import java.util.LinkedList;
 import java.util.List;
 
+import Control.Controller;
+
 public class BigBox extends Box {
 	// Une grand boite ne peut en contenir une autre
 	private List<LittleBox> listBoxes = new LinkedList<LittleBox>();
 	int[][] matrice;
+	// next free coords bottom
+	private int rowB = 0;
+	private int colB = 0;
+	// next free coords right
+	private int rowR = 0;
+	private int colR = 0;
 
 	/* ----- ----- Constructors ----- ----- */
 	public BigBox() {
@@ -21,24 +29,13 @@ public class BigBox extends Box {
 	
 	/* ----- ----- Methodes ----- ----- */
 	/**
-	 * @param r : abscisse of the origin of the little box (first case 1x1 at the top left)
-	 * @param c : ordonne of the origin of the little box (first case 1x1 at the top left)
+	 * @param posX : abscisse of the origin of the little box (first case 1x1 at the top left)
+	 * @param posY : ordonne of the origin of the little box (first case 1x1 at the top left)
 	 * */
-	public boolean addLittleBox(LittleBox b, int r, int c, int nb, int rM, int cM) throws Exception {
-		if(cM+c >= this.getColumn()) cM = this.getColumn()-1;
-		else cM +=c;
-		if(rM+r >= this.getRow()) rM = this.getRow()-1;
-		else rM += r;
-
-		if(!isSurfaceEmpty(b,r,c)) {
-			if(isSurfaceEmpty(b, r - 1, c)) r = r-1;
-			else if(isSurfaceEmpty(b, r, c-1)) c = c-1;
-			else if(isSurfaceEmpty(b,0,cM)) {r =0; c=cM;}
-			else if(isSurfaceEmpty(b,rM,0)) {r=rM; c=0;}
-
-			else return false;
-		}
-
+	public boolean addLittleBox(LittleBox b, int r, int c, int nb) throws Exception {
+		if(!isSurfaceEmpty(b,r,c)) 
+			return false;
+		
 		this.listBoxes.add(b);
 		
 		for(int i=0; i<b.getRow(); i++) {
@@ -56,7 +53,7 @@ public class BigBox extends Box {
 
 	public boolean isSurfaceEmpty(LittleBox b,int r, int c) throws Exception {
 		if(r > this.row || c > this.column)
-			throw new Exception("The little box is bigger than the big box !");
+			return false;
 
 		for(int i=0; i<b.getRow(); i++) {
 			for(int j=0; j<b.getColumn(); j++) {
@@ -66,11 +63,60 @@ public class BigBox extends Box {
 				} catch(Exception e) { 
 					return false;
 				}
-				//throw new Exception("There is already a little box at position " + i + ","+ j);
 			}
 		}
 		return true;
 	}
+	
+	////////////////////
+	
+	// a partir des derniere coordonnée où on a ajouté une boite, calcule les prochaines coordonnées libre en dessous
+	public void calculeNewCoordRight(LittleBox b) {
+		this.colR += b.getColumn();
+		
+		if(this.rowB<b.getRow()) {
+			this.rowB = b.getRow();
+		}
+		
+		// si on arrive au bord
+		if(this.colR >= this.column){
+			this.rowR = -1;
+			this.colR = -1;
+		}
+	}
+	
+	public void calculeNewCoordBottom(LittleBox b) {
+		this.rowR = this.rowB;
+		this.colR += b.column + 1;
+		this.rowB += b.getRow();
+		
+	
+
+		if(this.colR<b.getColumn()) {
+			this.colR = b.getColumn();
+		}
+
+		// si on arrive au bord
+		if(this.rowB >= this.row){
+			this.rowB = -1;
+			this.colB = -1;
+			
+		}
+	}
+	
+	public boolean addRightOrBottom(LittleBox b, int k) throws Exception {
+		if(this.isSurfaceEmpty(b, rowR, colR)) {
+			this.addLittleBox(b, rowR, colR, k);
+			calculeNewCoordRight(b);
+			return true;
+		} else if(this.isSurfaceEmpty(b, rowB, colB)) {
+			this.addLittleBox(b, rowB, colB, k);
+			calculeNewCoordBottom(b);
+			return true;
+		}
+		return false;
+	}	
+	
 	/* ----- ----- Accessors ----- ----- */
 	public List<LittleBox> getListBoxes() {
 		return this.listBoxes;
@@ -79,7 +125,8 @@ public class BigBox extends Box {
 	public int[][] getMatrice() {
 		return matrice;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		String res = "\n";
@@ -91,4 +138,11 @@ public class BigBox extends Box {
 		}
 		return res;
 	}
+	
+	/*public static void main(String[] args) throws Exception {
+		BigBox b = new BigBox(10,20);
+		System.out.println(b);
+		b.addLittleBox(new LittleBox(2,3), 2, 2, 1);
+		System.out.println(b);
+	}*/
 }

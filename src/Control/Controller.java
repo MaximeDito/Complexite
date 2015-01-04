@@ -30,8 +30,7 @@ public class Controller {
 		}
 		
 		try {
-			this.model.arrange();
-			//this.model.arrangeRecursif(0, 0, 0);
+			this.model.fit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
