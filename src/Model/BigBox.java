@@ -87,7 +87,7 @@ public class BigBox extends Box {
 	
 	public void calculeNewCoordBottom(LittleBox b) {
 		this.rowR = this.rowB;
-		this.colR += b.column + 1;
+		this.colR = 0;
 		this.rowB += b.getRow();
 		
 	

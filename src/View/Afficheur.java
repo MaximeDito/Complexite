@@ -4,6 +4,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public final class Afficheur {
             fw = new FileWriter(this.file);
             couleurs = new ArrayList<Color>();
             initialiserCouleurs(nbCouleur);
+            Charset.forName("UTF-8").newEncoder();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,14 +52,14 @@ public final class Afficheur {
      */
     public void initialiseFile(int nbBoxes) {
         try {
-            String head = "<html>"
+            String head =  "<html>"
                     + "\n<head>"
-                    + "\n<title>Résultat de la simulation | Marongiu et Dito</title>"
+                    + "\n<title>R&eacute;sultat de la simulation | Marongiu et Dito</title>"
                     + "\n<meta charset=\"utf-8\">"
                     + "\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css\">"
                     + "\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css\">"
                     + "\n<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js\"></script>"
-                    + "\n</head>" + "\n<body class=\"container\"> \n<style>tr { height:75px;}</style>\n<h1 class=\"h1\">Résultat de la simulation <small>Total grosses boites : "+nbBoxes+"</small></h1>";
+                    + "\n</head>" + "\n<body class=\"container\"> \n<style>tr { height:75px;}</style>\n<h1 class=\"h1\">R&eacute;sultat de la simulation <small>Total grosses boites : "+nbBoxes+"</small></h1>";
             // On écrit la chaîne
             this.fw.write(head);
         } catch (IOException e) {
