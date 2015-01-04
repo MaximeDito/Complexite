@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 public abstract class ReadFile {
 
-	public static String load(String url) {
+	public static String load(String url) throws Exception  {
 		String res = "";
 
 		try {
@@ -25,6 +25,7 @@ public abstract class ReadFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Chargement du fichier " + url + " : NOK");
+			throw new Exception("Chargement du fichier " + url + " : NOK");
 		}
 		
 		return res;

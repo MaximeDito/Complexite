@@ -21,11 +21,17 @@ public class Controller {
 		final JOptionPane exec = new JOptionPane();
 		int value = exec.showConfirmDialog(null, "Bienvenue dans le programme de Bin Packing\nVoulez vous commencer la simulation ?","Bin Packing", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		if (value == JOptionPane.YES_OPTION) {
-			String res = ReadFile.load(urlFile);
+			String res;
+			try {
+				res = ReadFile.load(urlFile);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "\"Erreur lors de la lecture du fichier entree.txt, fichier introuvable ou illisible !", "Erreur : Bin Packing", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			//System.out.println(res);
 
 			if (!parser.parse(res)) {
-				JOptionPane.showMessageDialog(null, "\"Erreur lors de la lecture du fichier entree.txt, fichier introuvable ou illisible !", "Erreur : Bin Packing", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "\"Erreur lors de l'analyse du fichier entree.txt, erreur de syntaxe de données en entrée !", "Erreur : Bin Packing", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			try {
